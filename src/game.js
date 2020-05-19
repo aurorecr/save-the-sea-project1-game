@@ -16,8 +16,8 @@ console.log(imgHeight);
 
 let fishnetPositionY = 0;
 let fishnetPositionX = 0; //default position
-const movePositionXright = - 30;
-const movePositionXleft = 30;
+const movePositionX= 30;
+let score = 0;
 
 
 console.log("initial fishnetPositionX", fishnetPositionX);
@@ -31,6 +31,9 @@ function loadBgAndFishnet() {
             console.log(" loadBgAndFishnet fishnetPositionX", fishnetPositionX);
 
             ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
+            ctx.fillStyle= "purple";
+            ctx.font = "20px Arial";
+            ctx.fillText("Score: " + score, 0, 20);   
         })
     })
 
@@ -42,10 +45,10 @@ function handleKeydownEvent(event) {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
 
-        console.log("handleKeydownEvent fishnetPositionX", fishnetPositionX);
-        console.log("fishnet.width", fishnet.width / 2);
+        // console.log("handleKeydownEvent fishnetPositionX", fishnetPositionX);
+        // console.log("fishnet.width", fishnet.width / 2);
         if (fishnetPositionX > 0) {
-            fishnetPositionX = fishnetPositionX - movePositionXleft;
+            fishnetPositionX = fishnetPositionX - movePositionX;
         }
         ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
     }
@@ -53,8 +56,8 @@ function handleKeydownEvent(event) {
     if (event.key == 'ArrowRight' || event.keyCode == 39) {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
-        if (fishnetPositionX > 0) {
-            fishnetPositionX = fishnetPositionX - movePositionXright;
+        if (fishnetPositionX + imgWidth < canvasWidth) {
+            fishnetPositionX = fishnetPositionX + movePositionX;
         }
         ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
     }
