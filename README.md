@@ -1,3 +1,5 @@
+# SAVE THE SEA
+
 ## Description
 
 Save the sea is a game where the player has to save the sea from the garbage with a fish net. The fish net move horizontally to catched the garbage thrown by the passer-by standing on the pier.The score of garbage catched is indicated at the top of the screen out of the remain item. 
@@ -70,7 +72,7 @@ My Trello Link [https://trello.com/b/j2RTqXjp/save-the-sea-videogame]
 URls for the project repo [https://github.com/aurorecr/save-the-sea-project1-game.git]
 
 ## Slides
-URls for the project presentation 
+URls for the project presentation [https://docs.google.com/presentation/d/1-HJspuC3nl2VB0KGPaIrJ8NOEL2x7YqUym-2_riXtbE/edit?usp=sharing]
  
  
 
