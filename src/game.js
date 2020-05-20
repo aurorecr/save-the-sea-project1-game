@@ -14,10 +14,9 @@ const imgHeight = fishnet.height;
 const imgWidth = fishnet.width;
 console.log(imgHeight);
 
-let fishnetPositionY = 0;
-let fishnetPositionX = 0; //default position
-const movePositionX= 30;
-let score = 0;
+fishnetPositionY = canvasHeight - imgHeight;
+fishnetPositionX = (canvasWidth - imgWidth) / 2; //default position
+const movePositionX = 30;
 
 
 console.log("initial fishnetPositionX", fishnetPositionX);
@@ -26,14 +25,8 @@ function loadBgAndFishnet() {
     bg.addEventListener("load", function () {
         ctx.drawImage(bg, 0, 0);
         fishnet.addEventListener("load", function () {
-            fishnetPositionY = canvasHeight - imgHeight;
-            fishnetPositionX = (canvasWidth - imgWidth) / 2;
-            console.log(" loadBgAndFishnet fishnetPositionX", fishnetPositionX);
-
-            ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
-            ctx.fillStyle= "purple";
-            ctx.font = "20px Arial";
-            ctx.fillText("Score: " + score, 0, 20);   
+        console.log(" loadBgAndFishnet fishnetPositionX", fishnetPositionX);
+        ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
         })
     })
 
@@ -45,8 +38,9 @@ function handleKeydownEvent(event) {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
 
-        // console.log("handleKeydownEvent fishnetPositionX", fishnetPositionX);
-        // console.log("fishnet.width", fishnet.width / 2);
+        console.log("handleKeydownEvent fishnetPositionX", fishnetPositionX);
+        console.log("fishnet.width", fishnet.width / 2);
+
         if (fishnetPositionX > 0) {
             fishnetPositionX = fishnetPositionX - movePositionX;
         }
