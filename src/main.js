@@ -27,11 +27,13 @@
 //           </div>
 //         </main>`);
 //       document.body.appendChild(splashScreen);
+
 //       var startButton = splashScreen.querySelector("#start-btn");
 //       startButton.addEventListener("click", function() {
 //         startGame();
 //       });
 //     }
+
 //     function removeSplashScreen() {
 //       splashScreen.remove();
 //     }

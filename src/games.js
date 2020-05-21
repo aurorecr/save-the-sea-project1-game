@@ -106,8 +106,6 @@ function moveGarb1() {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
         ctx.drawImage(saved, fishnetPositionX, (fishnetPositionY - imgHeight));
-
-        console.log("score ", score)
     }
    
 
@@ -116,19 +114,25 @@ function moveGarb1() {
         if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
             score++;
             soundDolphin();
+            if (score == 2){
+              clearInterval(intervalId);
+              location.href = "/src/winScreen.html";
+            }
         } else {
-            console.log("You lost")
+            //if Loose remove canvas
             document.getElementById("myCanvas").remove();
             clearInterval(intervalId);
             soundSplash();
+            location.href = "/src/gameOver.html";
         }
         garb1PositionY = 0;
         garb1PositionX = Math.random() * (canvasWidth - garb1Width);
     }
 
     ctx.fillStyle = "white";
-    ctx.font = "40px Arial";
-    ctx.fillText("Score: " + score, 270, 100);
+    ctx.font = "30px Arial";
+    ctx.fillText("Catched : " + score, 230, 100);
+    ctx.fillText("/10 ", 410, 100);
 
 }
 
