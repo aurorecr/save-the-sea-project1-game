@@ -4,23 +4,25 @@ this.garb1.src = "../img/garb1.png";
 this.saved = new Image();
 this.saved.src = "../img/saved.png";
 
-this.splash = new Audio ("../sounds/splash.mp3")
+this.dolphin = new Audio("../sounds/dolphin.mp3")
+
+this.splash = new Audio("../sounds/splash.mp3")
 
 const garb1Width = garb1.width;
 
-let garb1PositionX = 50;
+let garb1PositionX = 30;
 let garb1PositionY = 0;
-var downY = 2;
-
-let fishnetPositionY = canvasHeight - imgHeight - 100;
-let fishnetPositionX = (canvasWidth - imgWidth)/ 2; //default position
+var movIntervalY = 2;
 
 let score = 0;
+const countTo = 10;
+let intervalId = null;
 
-function loadGarb1() {
-      //  garb1PositionX = canvasWidth + garb1Width;
-        console.log ("position x of garb1",garb1PositionX);
-        ctx.drawImage(garb1, garb1PositionX, garb1PositionY);  
+function soundSplash() {
+    if (garb1PositionY > canvasHeight) {
+        this.splash.volume = 0.1;
+        this.splash.play();
+    }
 }
 
 
@@ -28,49 +30,62 @@ function ImagesTouching(x1, y1, img1, x2, y2, img2) {
     //
     // This function detects whether two images are touching
     // 
-    if (x1 >= x2+img2.width || x1+img1.width <= x2) return false;   // too far to the side
-    if (y1 >= y2+img2.height || y1+img1.height <= y2) return false; // too far above/below
-    return true;                                                    // otherwise, overlap   
-    }
+    if (x1 >= x2 + img2.width || x1 + img1.width <= x2) return false; // too far to the side
+    if (y1 >= y2 + img2.height || y1 + img1.height <= y2) return false; // too far above/below
+    return true; // otherwise, overlap   
+}
 
-function sound(){
-    this.splash.volume = 0.1;
-    // this.splash.currentTime = 0;
-    this.splash.play();
-}    
+function ImagesTouchingX(x1, img1, x2, img2) {
 
-function moveGarb1(){
+    if (x1 >= x2 + img2.width || x1 + img1.width <= x2) return false; // too far to the side
+    return true; // otherwise, overlap   
+}
+
+function soundDolphin() {
+    this.dolphin.volume = 0.1;
+    this.dolphin.play();
+}
+
+function moveGarb1() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    loadGarb1() 
     ctx.drawImage(bg, 0, 0);
-    console.log('fish x', fishnetPositionX);
-    console.log('fish y', fishnetPositionY);
+ 
     ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
-    ctx.drawImage(garb1, garb1PositionX, garb1PositionY);;
-    garb1PositionY += downY;
 
-     // SCORE text    
-     ctx.fillStyle= "white";
-     ctx.font = "40px Arial";
-     ctx.fillText("Score: " + score, 270 , 100); 
-     console.log('text', score) 
-     score++;
-    
-    // ---- COLISION  --- Appliying function "ImagesTouching" (x1, y1, img1, x2, y2, img2) ...
-     if (ImagesTouching(fishnetPositionX, fishnetPositionY,fishnet,garb1PositionX, garb1PositionY,garb1)){
-        // 
-        ctx.drawImage(saved,fishnetPositionX, (fishnetPositionY - imgHeight) - 100);
-        sound();
-        
+    if (garb1PositionY < canvasHeight) {
+        ctx.drawImage(garb1, garb1PositionX, garb1PositionY);
+        garb1PositionY += movIntervalY;
     }
+
+    // ---- COLISION  --- Appliying function "ImagesTouching" (x1, y1, img1, x2, y2, img2) ...
+    if (ImagesTouching(fishnetPositionX, fishnetPositionY, fishnet, garb1PositionX, garb1PositionY, garb1)) {
+
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(saved, fishnetPositionX, (fishnetPositionY - imgHeight));
+
+        console.log("score ", score)
+    }
+    soundSplash();
     // Garbage folling randomly 
-    if (garb1PositionY > canvasHeight ){
+
+    if (garb1PositionY > canvasHeight) {
+        if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
+            score++;
+            soundDolphin();
+        } else {
+            console.log("You lost")
+            document.getElementById("myCanvas").remove();
+            clearInterval(intervalId);
+        }
         garb1PositionY = 0;
         garb1PositionX = Math.random() * (canvasWidth - garb1Width);
     }
 
+    ctx.fillStyle = "white";
+    ctx.font = "40px Arial";
+    ctx.fillText("Score: " + score, 270, 100);
+
 }
 
- setInterval(moveGarb1,10);
-
-
+intervalId = setInterval(moveGarb1, 10);
