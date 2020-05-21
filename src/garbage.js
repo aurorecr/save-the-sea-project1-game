@@ -1,8 +1,18 @@
+let canvas = document.getElementById('myCanvas');
+let ctx = canvas.getContext('2d');
+canvas.style.border = '2px solid black';
+
 this.garb1 = new Image();
 this.garb1.src = "../img/garb1.png";
 
+this.bg = new Image();
+this.bg.src = "../img/landscape.png";
+
 this.saved = new Image();
 this.saved.src = "../img/saved.png";
+
+let fishnet = new Image();
+fishnet.src = "../img/fishnet.png";
 
 this.dolphin = new Audio("../sounds/dolphin.mp3")
 
@@ -17,6 +27,48 @@ var movIntervalY = 2;
 let score = 0;
 const countTo = 10;
 let intervalId = null;
+
+const canvasHeight = canvas.height;
+const canvasWidth = canvas.width;
+
+const imgHeight = fishnet.height;
+const imgWidth = fishnet.width;
+
+let fishnetPositionY = canvasHeight - 100;
+let fishnetPositionX = (canvasWidth - imgWidth) / 2; 
+
+console.log(fishnetPositionX);
+console.log(fishnetPositionY)
+
+// let fishnetPositionY = canvasHeight - imgHeight;
+// let fishnetPositionX = (canvasWidth - imgWidth) / 2; //default position
+const movePositionX = 30;
+
+function handleKeydownEvent(event) {
+    if (event.key == 'ArrowLeft' || event.keyCode == 37) {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(bg, 0, 0);
+        
+
+        if (fishnetPositionX > 0) {
+            fishnetPositionX = fishnetPositionX - movePositionX;
+        }
+        ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
+    }
+
+    if (event.key == 'ArrowRight' || event.keyCode == 39) {
+        ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+        ctx.drawImage(bg, 0, 0);
+        if (fishnetPositionX + imgWidth < canvasWidth) {
+            fishnetPositionX = fishnetPositionX + movePositionX;
+        }
+        ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
+    }
+
+}
+
+//everytime I press a keyboard execute function handleKeydownEvent
+document.addEventListener('keydown', handleKeydownEvent)
 
 function soundSplash() {
     if (garb1PositionY > canvasHeight) {
@@ -49,8 +101,12 @@ function soundDolphin() {
 function moveGarb1() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(bg, 0, 0);
- 
-    ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
+
+    console.log(fishnetPositionX);
+    console.log(fishnetPositionY);
+        ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
+
+    
 
     if (garb1PositionY < canvasHeight) {
         ctx.drawImage(garb1, garb1PositionX, garb1PositionY);
@@ -87,5 +143,11 @@ function moveGarb1() {
     ctx.fillText("Score: " + score, 270, 100);
 
 }
+function myFunc(){
 
-intervalId = setInterval(moveGarb1, 10);
+}
+intervalId = setInterval(function(){
+    requestAnimationFrame(moveGarb1);
+
+    }, 10);
+//intervalId = setInterval(moveGarb1, 10);
