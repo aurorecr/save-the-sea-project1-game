@@ -2,17 +2,17 @@ let canvas = document.getElementById('myCanvas');
 let ctx = canvas.getContext('2d');
 canvas.style.border = '2px solid black';
 
-this.garb1 = new Image();
-this.garb1.src = "../img/garb1.png";
-
 this.bg = new Image();
 this.bg.src = "../img/landscape.png";
 
-this.saved = new Image();
-this.saved.src = "../img/saved.png";
+this.garb1 = new Image();
+this.garb1.src = "../img/garb1.png";
 
 let fishnet = new Image();
 fishnet.src = "../img/fishnet.png";
+
+this.saved = new Image();
+this.saved.src = "../img/saved.png";
 
 this.dolphin = new Audio("../sounds/dolphin.mp3")
 
@@ -35,20 +35,15 @@ const imgHeight = fishnet.height;
 const imgWidth = fishnet.width;
 
 let fishnetPositionY = canvasHeight - 100;
-let fishnetPositionX = (canvasWidth - imgWidth) / 2; 
+let fishnetPositionX = (canvasWidth - imgWidth) / 2;
 
-console.log(fishnetPositionX);
-console.log(fishnetPositionY)
 
-// let fishnetPositionY = canvasHeight - imgHeight;
-// let fishnetPositionX = (canvasWidth - imgWidth) / 2; //default position
 const movePositionX = 30;
 
 function handleKeydownEvent(event) {
     if (event.key == 'ArrowLeft' || event.keyCode == 37) {
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
-        
 
         if (fishnetPositionX > 0) {
             fishnetPositionX = fishnetPositionX - movePositionX;
@@ -79,16 +74,13 @@ function soundSplash() {
 
 
 function ImagesTouching(x1, y1, img1, x2, y2, img2) {
-    //
     // This function detects whether two images are touching
-    // 
     if (x1 >= x2 + img2.width || x1 + img1.width <= x2) return false; // too far to the side
-    if (y1 >= y2 + img2.height || y1 + img1.height <= y2) return false; // too far above/below
+    if (y1 >= y2 + img2.height || y1 + img1.height <= y2)  return false; // too far above/below
     return true; // otherwise, overlap   
 }
 
 function ImagesTouchingX(x1, img1, x2, img2) {
-
     if (x1 >= x2 + img2.width || x1 + img1.width <= x2) return false; // too far to the side
     return true; // otherwise, overlap   
 }
@@ -101,12 +93,7 @@ function soundDolphin() {
 function moveGarb1() {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
     ctx.drawImage(bg, 0, 0);
-
-    console.log(fishnetPositionX);
-    console.log(fishnetPositionY);
-        ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
-
-    
+    ctx.drawImage(fishnet, fishnetPositionX, fishnetPositionY);
 
     if (garb1PositionY < canvasHeight) {
         ctx.drawImage(garb1, garb1PositionX, garb1PositionY);
@@ -122,9 +109,9 @@ function moveGarb1() {
 
         console.log("score ", score)
     }
-    soundSplash();
-    // Garbage folling randomly 
+   
 
+    // Garbage folling randomly 
     if (garb1PositionY > canvasHeight) {
         if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
             score++;
@@ -133,6 +120,7 @@ function moveGarb1() {
             console.log("You lost")
             document.getElementById("myCanvas").remove();
             clearInterval(intervalId);
+            soundSplash();
         }
         garb1PositionY = 0;
         garb1PositionX = Math.random() * (canvasWidth - garb1Width);
@@ -143,11 +131,9 @@ function moveGarb1() {
     ctx.fillText("Score: " + score, 270, 100);
 
 }
-function myFunc(){
 
+function start() {
+    intervalId = setInterval(moveGarb1, 10);
 }
-intervalId = setInterval(function(){
-    requestAnimationFrame(moveGarb1);
-
-    }, 10);
+start()
 //intervalId = setInterval(moveGarb1, 10);
