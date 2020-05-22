@@ -16,7 +16,7 @@ html {
   }
 /*** CANVAS position ****/
 
- .canvasContainer{
+ #canvasContainer{
   display: flex;
   justify-content:center;
   align-items: center;

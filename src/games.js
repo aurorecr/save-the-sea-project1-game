@@ -1,5 +1,5 @@
 let canvas = document.getElementById('myCanvas');
-this.canvasContainer = document.querySelector(".canvas-container");
+this.canvasContainer = document.querySelector(".canvasContainer");
 let ctx = canvas.getContext('2d');
 canvas.style.border = '2px solid black';
 
@@ -119,9 +119,9 @@ function moveGarb1() {
         if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
             score++;
             soundDolphin();
-            if (score == 10){
+            if (score == 6){
               clearInterval(intervalId);
-              location.href = "/src/winScreen.html";
+              location.href = "winScreen.html";
             }
         } 
         else if (lives > 0){
@@ -134,7 +134,7 @@ function moveGarb1() {
             document.getElementById("myCanvas").remove();
             clearInterval(intervalId);
         
-            location.href = "/src/gameOver.html";
+            location.href = "gameOver.html";
            
         }
         garb1PositionY = 0;
