@@ -32,10 +32,11 @@ html {
  .titleSave{
    color: white;
    font-size: 70px;
+   padding-bottom: 20px;
  }
 #newInstruction{
   position: absolute;
-  top: 200px;
+  top: 170px;
   left : 400px;
   width: 600px;
   font-size: 20px ;
