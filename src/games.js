@@ -5,20 +5,20 @@ canvas.style.border = '2px solid black';
 
 
 this.bg = new Image();
-this.bg.src = "../img/landscape.png";
+this.bg.src = "./img/landscape.png";
 
 this.garb1 = new Image();
-this.garb1.src = "../img/garb1.png";
+this.garb1.src = "./img/garb1.png";
 
 let fishnet = new Image();
-fishnet.src = "../img/fishnet.png";
+fishnet.src = "./img/fishnet.png";
 
 this.dolphPic = new Image();
-this.dolphPic.src = "../img/dolphin.png";
+this.dolphPic.src = "./img/dolphin.png";
 
-this.dolphin = new Audio("../sounds/dolphinSound.mp3")
+this.dolphin = new Audio("./sounds/dolphinSound.mp3")
 
-this.splash = new Audio("../sounds/splash.mp3")
+this.splash = new Audio("./sounds/splash.mp3")
 
 const garb1Width = garb1.width;
 
