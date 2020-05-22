@@ -30,7 +30,7 @@ let score = 0;
 const countTo = 10;
 let intervalId = null;
 
-let lives = 4;
+let lives = 2;
 
 const canvasHeight = canvas.height;
 const canvasWidth = canvas.width;
@@ -119,7 +119,7 @@ function moveGarb1() {
         if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
             score++;
             soundDolphin();
-            if (score == 6){
+            if (score == 4){
               clearInterval(intervalId);
               location.href = "winScreen.html";
             }
@@ -144,7 +144,7 @@ function moveGarb1() {
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
     ctx.fillText("Catched : " + score, 230, 100);
-    ctx.fillText("/10 ", 410, 100);
+    ctx.fillText("/4 ", 410, 100);
 
 }
 
