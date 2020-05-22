@@ -1,6 +1,8 @@
 let canvas = document.getElementById('myCanvas');
+this.canvasContainer = document.querySelector(".canvas-container");
 let ctx = canvas.getContext('2d');
 canvas.style.border = '2px solid black';
+
 
 this.bg = new Image();
 this.bg.src = "../img/landscape.png";
@@ -11,10 +13,10 @@ this.garb1.src = "../img/garb1.png";
 let fishnet = new Image();
 fishnet.src = "../img/fishnet.png";
 
-this.saved = new Image();
-this.saved.src = "../img/saved.png";
+this.dolphPic = new Image();
+this.dolphPic.src = "../img/dolphin.png";
 
-this.dolphin = new Audio("../sounds/dolphin.mp3")
+this.dolphin = new Audio("../sounds/dolphinSound.mp3")
 
 this.splash = new Audio("../sounds/splash.mp3")
 
@@ -28,13 +30,15 @@ let score = 0;
 const countTo = 10;
 let intervalId = null;
 
+let lives = 4;
+
 const canvasHeight = canvas.height;
 const canvasWidth = canvas.width;
 
 const imgHeight = fishnet.height;
 const imgWidth = fishnet.width;
 
-let fishnetPositionY = canvasHeight - 100;
+let fishnetPositionY = canvasHeight - 160;
 let fishnetPositionX = (canvasWidth - imgWidth) / 2;
 
 
@@ -66,10 +70,10 @@ function handleKeydownEvent(event) {
 document.addEventListener('keydown', handleKeydownEvent)
 
 function soundSplash() {
-    if (garb1PositionY > canvasHeight) {
-        this.splash.volume = 0.1;
-        this.splash.play();
-    }
+    
+     this.splash.volume = 0.1;
+     this.splash.play();
+    
 }
 
 
@@ -88,6 +92,7 @@ function ImagesTouchingX(x1, img1, x2, img2) {
 function soundDolphin() {
     this.dolphin.volume = 0.1;
     this.dolphin.play();
+   
 }
 
 function moveGarb1() {
@@ -105,7 +110,7 @@ function moveGarb1() {
 
         ctx.clearRect(0, 0, canvasWidth, canvasHeight);
         ctx.drawImage(bg, 0, 0);
-        ctx.drawImage(saved, fishnetPositionX, (fishnetPositionY - imgHeight));
+        ctx.drawImage(dolphPic, fishnetPositionX, (fishnetPositionY - imgHeight) - 20);
     }
    
 
@@ -114,16 +119,23 @@ function moveGarb1() {
         if (ImagesTouchingX(fishnetPositionX, fishnet, garb1PositionX, garb1)) {
             score++;
             soundDolphin();
-            if (score == 2){
+            if (score == 10){
               clearInterval(intervalId);
               location.href = "/src/winScreen.html";
             }
-        } else {
-            //if Loose remove canvas
+        } 
+        else if (lives > 0){
+            lives--;
+            soundSplash();
+        }
+        else {
+            //if Loose remove canvas - Players lost the game
+           
             document.getElementById("myCanvas").remove();
             clearInterval(intervalId);
-            soundSplash();
+        
             location.href = "/src/gameOver.html";
+           
         }
         garb1PositionY = 0;
         garb1PositionX = Math.random() * (canvasWidth - garb1Width);
@@ -140,4 +152,3 @@ function start() {
     intervalId = setInterval(moveGarb1, 10);
 }
 start()
-//intervalId = setInterval(moveGarb1, 10);
