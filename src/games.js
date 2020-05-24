@@ -143,8 +143,8 @@ function moveGarb1() {
 
     ctx.fillStyle = "white";
     ctx.font = "30px Arial";
-    ctx.fillText("Catched : " + score, 230, 100);
-    ctx.fillText("/4 ", 410, 100);
+    ctx.fillText("Catched : " + score, 20, 40);
+    ctx.fillText("/4 ", 190, 40);
 
 }
 
